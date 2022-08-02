@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html>
-
-
   <head>
-    <!-- Meta Data-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Title -->
     <title>Hello Bulma!</title>
-    <!-- Bulma CSS Link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <!-- Personal CSS File -->
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
-
   <body>
-
-    <!-- Header -->
-    <section class="hero is-info">
-      <div class="hero-body">
-        <p class="title">Movie/Game Finder</p>
-        <p class="subtitle">Search a game to find a movie for you or vice versa</p>
+    <section class="hero is-info is-mobile">
+      <div class="hero-body has-text-centered">
+        <p class="title">
+          Movie/Game Finder
+        </p>
+        <p class="subtitle">
+          Search a game to find a movie for you or vice versa
+        </p>
       </div>
     </section>
-
-
-    <section class="section">
+    <section class="section is-mobile">
       <div class="field has-addons">
         <p class="control">
           <span class="select">
@@ -44,18 +37,18 @@
           </a>
         </p>
       </div>
-      <div class="container columns">
-        <div class="column tile is-half">
-          <h3>Games for you</h3>
-          <ul></ul>
-        </div>
-        <div class="column tile is-half">
-          <h3>Movies for you</h3>
-          <ul></ul>
+      <div class="tile is-mobile">
+        <div class="container tile is-parent">
+          <div class="tile is-child is-primary box has-background-grey-light">
+            <h3>Games for you</h3>
+            <ul></ul>
+          </div>
+          <div class="tile is-child is-success box has-background-grey-light">
+            <h3>Movies for you</h3>
+            <ul></ul>
+          </div>
         </div>
       </div>
     </section>
-
-    <script src="./assets/js/script.js"></script>
   </body>
 </html>
