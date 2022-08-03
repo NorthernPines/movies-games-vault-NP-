@@ -10,3 +10,12 @@
     background-color: #494f59;
     color: #bccbe0;
 }
+h2{
+    width: 50%;
+}
+.titles{
+    flex-wrap: wrap;
+}
+#gPoster {
+    width: 100%;
+}
