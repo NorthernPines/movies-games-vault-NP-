@@ -32,4 +32,23 @@ fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
     return response.json();
 }).then(function(data){
     console.log(data);
+    window.localStorage.setItem('movie', JSON.stringify(data));
 });
+
+function displayPreviousRecs() {
+    var movie = JSON.parse(window.localStorage.getItem('movie'));
+    console.log(movie.Title);
+    document.querySelector('#title').textContent = "Title: " + movie.Title;
+    document.querySelector('#year').textContent = "Year: " + movie.Year;
+    document.querySelector('#director').textContent = "Director: " + movie.Director;
+    document.querySelector('#actors').textContent = "Actors: " + movie.Actors;
+    document.querySelector('#imdbRating').textContent = "IMDB: " + movie.Ratings[0].Value;
+    document.querySelector('#rtRating').textContent = "Rotten Tomatoes: " + movie.Ratings[1].Value;
+    document.querySelector('#mcRating').textContent = "Metacritic: " + movie.Ratings[2].Value;
+
+
+    var game = JSON.parse(window.localStorage.getItem('game'));
+
+}
+
+displayPreviousRecs();
