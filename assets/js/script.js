@@ -15,12 +15,13 @@ const movieApiKey = "c23741a3";
 
 // TODO: Find parameter for users to search by title
 // Fetch request for Games 
-fetch("https://api.rawg.io/api/platforms?key=" + gameApiKey, {
+fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
     method: "GET"
 }).then(function(response){
     return response.json();
 }).then(function(data){
-    console.log(data);
+    console.log(data.results[0]);
+    window.localStorage.setItem('game', JSON.stringify(data.results[0]))
 });
 
 
@@ -37,18 +38,29 @@ fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
 
 function displayPreviousRecs() {
     var movie = JSON.parse(window.localStorage.getItem('movie'));
-    console.log(movie.Title);
-    document.querySelector('#title').textContent = "Title: " + movie.Title;
-    document.querySelector('#year').textContent = "Year: " + movie.Year;
-    document.querySelector('#director').textContent = "Director: " + movie.Director;
-    document.querySelector('#actors').textContent = "Actors: " + movie.Actors;
-    document.querySelector('#imdbRating').textContent = "IMDB: " + movie.Ratings[0].Value;
-    document.querySelector('#rtRating').textContent = "Rotten Tomatoes: " + movie.Ratings[1].Value;
-    document.querySelector('#mcRating').textContent = "Metacritic: " + movie.Ratings[2].Value;
+    
+    document.querySelector('#mTitle').textContent = "Title: " + movie.Title;
+    document.querySelector('#mRelease').textContent = "Release: " + movie.Released;
+    document.querySelector('#mDirector').textContent = "Director: " + movie.Director;
+    document.querySelector('#mActors').textContent = "Actors: " + movie.Actors;
+    document.querySelector('#mIMDbRating').textContent = "IMDB: " + movie.Ratings[0].Value;
+    document.querySelector('#mRTRating').textContent = "Rotten Tomatoes: " + movie.Ratings[1].Value;
+    document.querySelector('#mMCRating').textContent = "Metacritic: " + movie.Ratings[2].Value;
+    document.querySelector('#mPlot').textContent = "Plot: " + movie.Plot;
 
+    var mPoster = movie.Poster;
+    document.querySelector('#mPoster').setAttribute('src', mPoster);
 
     var game = JSON.parse(window.localStorage.getItem('game'));
 
+    document.querySelector('#gTitle').textContent = "Title: " + game.name;
+    document.querySelector('#gRelease').textContent = "Release: " + game.released;
+    document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
+    document.querySelector('#gMCRating').textContent = "Metacritic: " + game.metacritic;
+    document.querySelector('#gGenres').textContent = "Genres: " + game.genres[0].name + ", " + game.genres[1].name + ", " + game.genres[2].name;
+
+    var gPoster = game.background_image;
+    document.querySelector('#gPoster').setAttribute('src', gPoster)
 }
 
 displayPreviousRecs();

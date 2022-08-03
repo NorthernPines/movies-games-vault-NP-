@@ -38,25 +38,42 @@
         </p>
       </div>
       <div class="tile is-mobile">
-        <div class="container tile is-parent">
-          <div class="tile is-child is-primary box has-background-grey-light">
-            <h2 class="has-text-centered">Movie Recommendation</h2>
-            <div class="is-4">
-              <p id="title"></p>
-              <p id="year"></p>
-              <p id="director"></p>
-              <p id="actors"></p>
+        <div class="container tile is-parent titles">
+          <h2 class="has-text-centered">Movie Recommendation</h2>
+          <h2 class="has-text-centered">Game Recommendation</h2>
+          <div class="tile is-child box has-background-grey-light columns">
+            <div class="column">
+              <div class="is-4">
+                <p id="mTitle"></p>
+                <p id="mRelease"></p>
+                <p id="mDirector"></p>
+                <p id="mActors"></p>
+              </div>
+              <div class="is-4">
+                <p id="mIMDbRating"></p>
+                <p id="mRTRating"></p>
+                <p id="mMCRating"></p>
+                <p id="mPlot"></p>
+              </div>
             </div>
-            <div class="is-4">
-              <p id="imdbRating"></p>
-              <p id="rtRating"></p>
-              <p id="mcRating"></p>
-            </div>
-            <img class="movie picture is-4">
+            <img class="movie picture is-2by3 column" id="mPoster" src="">
           </div>
-          <div class="tile is-child is-success box has-background-grey-light">
-            <h2 class="has-text-centered">Game Recommendation</h2>
-            <ul></ul>
+          <div class="tile is-child box has-background-grey-light columns titles">
+            <div class="column">
+              <div class="is-4">
+                <p id="gTitle"></p>
+                <p id="gRelease"></p>
+                <p id="gESRB"></p>
+                <p id="gMCRating"></p>
+              </div>
+              <div class="is-4">
+                <p id="gGenres"></p>
+                <p id="gRTRating"></p>
+                <p id="gMCRating"></p>
+                <p id="gPlot"></p>
+              </div>
+            </div>
+            <img class="movie picture is-4 column" id="gPoster" src="">
           </div>
         </div>
       </div>
