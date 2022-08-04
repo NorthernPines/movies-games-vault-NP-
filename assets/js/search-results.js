@@ -6,9 +6,8 @@ var searchList = document.getElementById("search-list");
 var resultGrid = document.getElementById("result-grid");
 var searchListMovies = document.querySelector(".search-list-item");
 var searchTerm = movieSearchBox.value;
-
 // URLs
-
+var movieDetailsUrl = "https://omdbapi.com/i=tt5463162&apikey=c23741a3";
 
 // Functions
 function loadMovies(searchTerm){
@@ -27,13 +26,12 @@ function loadMovies(searchTerm){
     }); 
 }
 
-
 function findMovies(){
 
     var searchTerm = movieSearchBox.value;
 
-    if (searchTerm.length > 0 || searchTerm.value != undefined){
-    searchList.classList.remove("hide-search-list");
+    if (searchTerm.length > 0){
+        searchList.classList.remove("hide-search-list");
         loadMovies(searchTerm);
     } else {
         searchList.classList.add("hide-search-list");
@@ -41,8 +39,6 @@ function findMovies(){
 }
 
 function displayMovieList(movies){
-    searchList.classList.remove("hide-search-list");
-
     // Empties string
     searchList.innerHTML = "";
     // Keeps search list limited to 10
@@ -74,24 +70,8 @@ function movieDetails(event){
     // If statement only if div has class of search-list-item
     if(event.target.matches(".search-list-item")){
         var movieId = event.target.getAttribute("data-id");
-        var movieDetailsUrl = `https://omdbapi.com/?i=${movieId}&apikey=c23741a3`;
-        // When clicked, hide search list
         searchList.classList.add("hide-search-list");
-        // Empty search box of text
-        movieSearchBox.value = "";
-
-        // Fetch Movie Details
-        fetch(movieDetailsUrl)
-        .then(function(response){
-            if(!response.ok){
-                throw response.json();
-            }
-            return response.json();
-        }).then(function(movieInfo){
-            // console.log(movieInfo);
-            displayMovieDetails(movieInfo);
-        })
-        // console.log(movieId);
+        console.log(movieId);
     } 
 
 
@@ -105,45 +85,28 @@ function movieDetails(event){
     // Display Movie Details to Page with displayMovieDetails()
 }
 
-function displayMovieDetails(info){
-    console.log(info)
-    resultGrid.innerHTML = `
-    <div class="movie-poster">
-        <img src='${info.Poster}' alt="movie poster">
-    </div>
-    <div class="movie-info">
-        <h3 class="movie-title">${info.Title}</h3>
-        <ul class="movie-misc-info">
-            <li class="release">${info.Released}</li>
-            <li class="rated">${info.Rated}</li>
-        </ul>
-        <p class="genre">${info.Genre}</p>
-        <p class="plot">${info.Plot}</p>
-        <button class="is-success" id="saveBtn" >Save and Display Recommendation</button>
-    </div>
-    `;
-    window.localStorage.setItem('movie', JSON.stringify(info));
-}
-
-function saveButton(event) {
-    
-    console.log(event.target);
-    if (event.target.matches("#saveBtn")){
-        console.log(event.target);
-        
-        var homePage = "./index.html";
-        location.assign(homePage);
-    }
-}
-
+// function displayMovieDetails(){
+//     resultGrid.innerHTML = `
+//     <div class="movie-poster>
+//         <img src="${.Poster}" alt="movie poster">
+//     </div>
+//     <div class="movie-info">
+//         <h3 class="movie-title">${.Title}</h3>
+//         <ul class="movie-misc-info">
+//             <li class="release">${.Released}</li>
+//             <li class="rated">${.Rated}</li>
+//         </ul>
+//         <p class="genre">${.Genre}</p>
+//         <p class="plot">${.Plot}</p>
+//     </div>
+//     `;
+// }
 // Call Functions
-// findMovies();
-// loadMovies();
+findMovies();
+loadMovies("Black Panther");
 
 // Event Listeners
-// movieSearchBox.addEventListener("keyup", findMovies);
-// movieSearchBox.addEventListener("keyup", loadMovies);
-// movieSearchBox.addEventListener("click", findMovies);
-var saveBtton = document.querySelector('#saveBtn');
+movieSearchBox.addEventListener("keyup", findMovies);
+movieSearchBox.addEventListener("keyup", loadMovies);
+movieSearchBox.addEventListener("click", findMovies);
 searchList.addEventListener("click", movieDetails);
-resultGrid.addEventListener("click", saveButton);
