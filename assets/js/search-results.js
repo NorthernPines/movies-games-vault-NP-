@@ -6,6 +6,7 @@ var searchList = document.getElementById("search-list");
 var resultGrid = document.getElementById("result-grid");
 var searchListMovies = document.querySelector(".search-list-item");
 var searchTerm = movieSearchBox.value;
+
 // URLs
 
 
@@ -105,9 +106,10 @@ function movieDetails(event){
 }
 
 function displayMovieDetails(info){
+    console.log(info)
     resultGrid.innerHTML = `
-    <div class="movie-poster>
-        <img src="${info.Poster}" alt="movie poster">
+    <div class="movie-poster">
+        <img src='${info.Poster}' alt="movie poster">
     </div>
     <div class="movie-info">
         <h3 class="movie-title">${info.Title}</h3>
@@ -117,8 +119,21 @@ function displayMovieDetails(info){
         </ul>
         <p class="genre">${info.Genre}</p>
         <p class="plot">${info.Plot}</p>
+        <button class="is-success" id="saveBtn" >Save and Display Recommendation</button>
     </div>
     `;
+    window.localStorage.setItem('movie', JSON.stringify(info));
+}
+
+function saveButton(event) {
+    
+    console.log(event.target);
+    if (event.target.matches("#saveBtn")){
+        console.log(event.target);
+        
+        var homePage = "./index.html";
+        location.assign(homePage);
+    }
 }
 
 // Call Functions
@@ -129,4 +144,6 @@ function displayMovieDetails(info){
 // movieSearchBox.addEventListener("keyup", findMovies);
 // movieSearchBox.addEventListener("keyup", loadMovies);
 // movieSearchBox.addEventListener("click", findMovies);
+var saveBtton = document.querySelector('#saveBtn');
 searchList.addEventListener("click", movieDetails);
+resultGrid.addEventListener("click", saveButton);

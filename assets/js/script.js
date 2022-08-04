@@ -37,15 +37,7 @@ function filterGenre(filteredGenre) {
 function handleSearchFormSubmit(event){
     event.preventDefault();
 
-    var searchInputVal = document.querySelector("#search-input").value.trim();
-    var formatInputVal = document.querySelector("#format-input").value;
-    
-    if(!searchInputVal){
-        console.error("please input a valid movie or game")
-        return;
-    }
-
-    var queryString = "./search-results.html?q=" + searchInputVal + "&format=" + formatInputVal;
+    var queryString = "./search-results.html";
     location.assign(queryString);
 };
 
@@ -89,8 +81,10 @@ fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
 });
 
 function displayPreviousRecs() {
+    // getting last movie from local storage
     var movie = JSON.parse(window.localStorage.getItem('movie'));
-    
+
+    // displaying movie information of last saved movie 
     document.querySelector('#mTitle').textContent = "Title: " + movie.Title;
     document.querySelector('#mRelease').textContent = "Release: " + movie.Released;
     document.querySelector('#mDirector').textContent = "Director: " + movie.Director;
@@ -100,17 +94,21 @@ function displayPreviousRecs() {
     document.querySelector('#mMCRating').textContent = "Metacritic: " + movie.Ratings[2].Value;
     document.querySelector('#mPlot').textContent = "Plot: " + movie.Plot;
 
+    // setting the source of the poster to the link that was fetched with the movie
     var mPoster = movie.Poster;
     document.querySelector('#mPoster').setAttribute('src', mPoster);
 
+    // getting last game from local storage
     var game = JSON.parse(window.localStorage.getItem('game'));
 
+    // displaying game information of last saved game
     document.querySelector('#gTitle').textContent = "Title: " + game.name;
     document.querySelector('#gRelease').textContent = "Release: " + game.released;
     document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
     document.querySelector('#gMCRating').textContent = "Metacritic: " + game.metacritic;
     document.querySelector('#gGenres').textContent = "Genres: " + game.genres[0].name + ", " + game.genres[1].name + ", " + game.genres[2].name;
 
+    // setting the source of the poster to the link fetched with the game
     var gPoster = game.background_image;
     document.querySelector('#gPoster').setAttribute('src', gPoster)
 }

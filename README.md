@@ -8,4 +8,12 @@ Our biggest challenge was on how to approach filtering certain video game genre'
 https://natesoum.github.io/movies-games-vault/
 
 ## Screen Shot
-![ScreenShot](.assets/img/movie-game-vault)
+![ScreenShot](.assets/images/Screenshot.PNG)
+
+## Resources
+
+* OMDb API
+
+* RAWG API
+
+* Bulma
