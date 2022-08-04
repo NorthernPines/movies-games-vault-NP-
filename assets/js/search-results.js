@@ -12,39 +12,18 @@ var movieDetailsUrl = "https://omdbapi.com/i=tt5463162&apikey=c23741a3";
 function loadMovies(searchTerm){
     // URL for Movie Titles 
     var movieTitlesUrl = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=c23741a3`;
-    // Fetch URL
-    // fetch(movieTitlesUrl)
-    // .then((response) => response.json()) 
-    // .then((data) => console.log(data));
-
-    // fetch(movieTitlesUrl)
-    // .then(function(response){
-    //     if(!response.ok){
-    //         throw response.json();
-    //     }
-    //     return response.json();
-    // }).then(function(movieResults){
-    //     console.log(movieResults);
-    // }); 
-    // if(DataTransfer.Response === "True"){
-    //     displayMovieList(data.Search);
-    // };
 
     fetch(movieTitlesUrl)
-    .then(function (response){
-        if (response.ok) {
-            console.log(response);
-            response.json()
-            .then(function (data){
-                console.log(data);
-            })
+    .then(function(response){
+        if(!response.ok){
+            throw response.json();
         }
-    })
-    displayMovieList(data.Search);
+        return response.json();
+    }).then(function(movieResults){
+        console.log(movieResults);
+        displayMovieList(movieResults.Search);
+    }); 
 }
-
-
-
 
 function findMovies(){
 
@@ -59,10 +38,11 @@ function findMovies(){
 }
 
 function displayMovieList(movies){
+    // Empties string
     searchList.innerHTML = "";
-    for(let i = 0; i < movies.length; i++){
+    // Keeps search list limited to 10
+    for(let i = 0; i < 10; i++){ 
         var movieListItem = document.createElement("div");
-        console.log(movieListItem);
         movieListItem.dataset.id = movies[i].imdbID;
         movieListItem.classList.add("search-list-item");
         if(movies[i].Poster != "N/A"){
@@ -70,6 +50,7 @@ function displayMovieList(movies){
         } else {
             // Download a "image not found" placeholder
             moviePoster = "#.jpg";
+        }
 
             movieListItem.innerHTML = `
             <div class="search-item-thumbnail">
@@ -80,15 +61,16 @@ function displayMovieList(movies){
                 <p>${movies[i].Year}</p>
             </div>
             `;
-
+            console.log(movieListItem);
             searchList.appendChild(movieListItem);
-        }
     }
 }
 
+// Call Functions
 findMovies();
 loadMovies("Black Panther");
 
+// Event Listeners
 movieSearchBox.addEventListener("keyup", findMovies);
 movieSearchBox.addEventListener("keyup", loadMovies);
 movieSearchBox.addEventListener("click", findMovies);
