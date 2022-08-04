@@ -18,31 +18,18 @@
     <section class="hero is-info is-mobile">
       <div class="hero-body has-text-centered">
         <h1 class="title">Movie/Game Finder</h1>
-        <p class="subtitle">Search a game to find a movie for you or vice versa</p>
+        <p class="subtitle">Search a movie to find a game for you</p>
       </div>
     </section>
 
     <section class="section is-mobile">
       <form id="form" class="field has-addons">
-        <div class="control">
-          <span class="select">
-            <select id="format-input">
-              <option value="games">Game Search</option>
-              <option value="movies">Movie Search</option>
-            </select>
-          </span>
-        </div>
-        <p class="control is-expanded">
-          <input class="input" id="search-input" type="text" placeholder="Name of Movie or Game">
-        </p>
-        <p class="control">
-          <button class="button" id="button">Search</button>
-        </p>
+        <button class="button is-medium is-fullwidth">Click to begin choosing a movie</button>
       </form>
 
       <div class="tile is-mobile">
         <div class="container tile is-parent titles">
-          <h2 class="has-text-centered">Movie Recommendation</h2>
+          <h2 class="has-text-centered">Movie Choice</h2>
           <h2 class="has-text-centered">Game Recommendation</h2>
           <!-- section for displaying movie -->
           <section class="tile is-child box has-background-grey-light columns">
@@ -75,7 +62,7 @@
           </section>
         </div>
       </div>
-      
+
     </section>
 
     <script src="./assets/js/script.js"></script>

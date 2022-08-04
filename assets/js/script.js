@@ -37,15 +37,7 @@ function filterGenre(filteredGenre) {
 function handleSearchFormSubmit(event){
     event.preventDefault();
 
-    var searchInputVal = document.querySelector("#search-input").value.trim();
-    var formatInputVal = document.querySelector("#format-input").value;
-    
-    if(!searchInputVal){
-        console.error("please input a valid movie or game")
-        return;
-    }
-
-    var queryString = "./search-results.html?q=" + searchInputVal + "&format=" + formatInputVal;
+    var queryString = "./search-results.html";
     location.assign(queryString);
 };
 
