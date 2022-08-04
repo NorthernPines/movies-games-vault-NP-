@@ -4,6 +4,7 @@
 var movieSearchBox = document.getElementById("movie-search-box");
 var searchList = document.getElementById("search-list");
 var resultGrid = document.getElementById("result-grid");
+var searchListMovies = document.querySelector(".search-list-item");
 var searchTerm = movieSearchBox.value;
 // URLs
 var movieDetailsUrl = "https://omdbapi.com/i=tt5463162&apikey=c23741a3";
@@ -66,6 +67,41 @@ function displayMovieList(movies){
     }
 }
 
+function movieDetails(event){
+    // If statement only if div has class of search-list-item
+    if(event.target.matches(".search-list-item")){
+        var movieId = event.target.getAttribute("data-id");
+        searchList.classList.add("hide-search-list");
+        console.log(movieId);
+    } 
+
+
+
+    // Event Listener
+    // When clicking on search results
+    // Hide the entire search list 
+
+ 
+    // Fetch Movie Details 
+    // Display Movie Details to Page with displayMovieDetails()
+}
+
+// function displayMovieDetails(){
+//     resultGrid.innerHTML = `
+//     <div class="movie-poster>
+//         <img src="${.Poster}" alt="movie poster">
+//     </div>
+//     <div class="movie-info">
+//         <h3 class="movie-title">${.Title}</h3>
+//         <ul class="movie-misc-info">
+//             <li class="release">${.Released}</li>
+//             <li class="rated">${.Rated}</li>
+//         </ul>
+//         <p class="genre">${.Genre}</p>
+//         <p class="plot">${.Plot}</p>
+//     </div>
+//     `;
+// }
 // Call Functions
 findMovies();
 loadMovies("Black Panther");
@@ -74,3 +110,4 @@ loadMovies("Black Panther");
 movieSearchBox.addEventListener("keyup", findMovies);
 movieSearchBox.addEventListener("keyup", loadMovies);
 movieSearchBox.addEventListener("click", findMovies);
+searchList.addEventListener("click", movieDetails);
