@@ -2,6 +2,7 @@
 var formEl = document.querySelector("#form");
 var buttonEl = document.querySelector("#button");
 var searchBarEl = document.querySelector("#search-input")
+
 // Declare keys 
 
 const gameApiKey = "e74f1531c0f74b7db40ea409fea58784";
@@ -86,27 +87,29 @@ function setGenres() {
 function handleSearchFormSubmit(event){
     event.preventDefault();
 
-    var searchInputVal = document.querySelector("#search-input").value.trim();
-    var formatInputVal = document.querySelector("#format-input").value;
-    
-    if(!searchInputVal){
-        console.error("please input a valid movie or game")
-        return;
-    }
-
-    var queryString = "./search-results.html?q=" + searchInputVal + "&format=" + formatInputVal;
+    var queryString = "./search-results.html";
     location.assign(queryString);
 };
 
+// Event listeners
+formEl.addEventListener("submit", handleSearchFormSubmit);
 
-
-
+function storeLocal (storeMe, type) {
+    
+    if (type == 'game') {
+        window.localStorage.setItem('game', JSON.stringify(storeMe.results[0]));
+    } else {
+        window.localStorage.setItem('movie', JSON.stringify(storeMe));
+    }
+    
+}
 // Fetch request for Games 
 fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
     method: "GET"
 }).then(function(response){
     return response.json();
 }).then(function(data){
+    //console.log(data.results[0]);
     window.localStorage.setItem('game', JSON.stringify(data.results[0]))
 });
 
@@ -117,12 +120,15 @@ fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
 }).then(function(response){
     return response.json();
 }).then(function(data){
+    //console.log(data);
     window.localStorage.setItem('movie', JSON.stringify(data));
 });
 
 function displayPreviousRecs() {
+    // getting last movie from local storage
     var movie = JSON.parse(window.localStorage.getItem('movie'));
-    
+
+    // displaying movie information of last saved movie 
     document.querySelector('#mTitle').textContent = "Title: " + movie.Title;
     document.querySelector('#mRelease').textContent = "Release: " + movie.Released;
     document.querySelector('#mDirector').textContent = "Director: " + movie.Director;
@@ -132,20 +138,24 @@ function displayPreviousRecs() {
     document.querySelector('#mMCRating').textContent = "Metacritic: " + movie.Ratings[2].Value;
     document.querySelector('#mPlot').textContent = "Plot: " + movie.Plot;
 
+    // setting the source of the poster to the link that was fetched with the movie
     var mPoster = movie.Poster;
     document.querySelector('#mPoster').setAttribute('src', mPoster);
 
+    // getting last game from local storage
     var game = JSON.parse(window.localStorage.getItem('game'));
 
+    // displaying game information of last saved game
     document.querySelector('#gTitle').textContent = "Title: " + game.name;
     document.querySelector('#gRelease').textContent = "Release: " + game.released;
     document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
     document.querySelector('#gMCRating').textContent = "Metacritic: " + game.metacritic;
     document.querySelector('#gGenres').textContent = "Genres: " + game.genres[0].name + ", " + game.genres[1].name + ", " + game.genres[2].name;
 
+    // setting the source of the poster to the link fetched with the game
     var gPoster = game.background_image;
     document.querySelector('#gPoster').setAttribute('src', gPoster)
 }
 
-// displayPreviousRecs();
+//displayPreviousRecs();
 recommendGame();
