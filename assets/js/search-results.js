@@ -66,7 +66,6 @@ function displayMovieList(movies){
             searchList.appendChild(movieListItem);
     }
 }
-
 function movieDetails(event){
     // If statement only if div has class of search-list-item
     if(event.target.matches(".search-list-item")){

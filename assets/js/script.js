@@ -3,6 +3,37 @@ var formEl = document.querySelector("#form");
 var buttonEl = document.querySelector("#button");
 var searchBarEl = document.querySelector("#search-input")
 
+// Creating genre vars for filtering
+var genre1;
+var genre2;
+var genre3;
+
+//Functions
+
+function filterGenre(filteredGenre) {
+    let gameGenres = [ 'Arcade' ,  'Educational' , 'Casual' , 'Board Games' , 'Educational' ,
+     'Indie' ,  'RPG' , 'Puzzle' , 'Adventure' , 'Simulation' ,'Massively-Multiplayer' ,
+      'Platformer' , 'Puzzle' ,  'Strategy' , 'Card' , 'Indie' , 'Sports' , 'Massively-Multiplayer' ,
+       'Racing' , 'Shooter' , 'Shooter'];
+    let movieGenres = ["Animation" , "Biography" , "Comedy" , "Crime" , "Documentary" ,
+     "Drama" ,  "Fantasy" , "Film Noir" , "History"  ,  "Horror" , "Music" , "Musical" ,
+      "Mystery" , "Romance" ,  "Sci-Fi" , "Short" , "Sport" , "Superhero" , "Thriller" ,
+       "War" , "Western"];
+    if (choice === true){
+        for (i = 0; i < gameGenres.length; i++) {
+            if (filterGenre == movieGenres[i]) {
+                filterGenre = gameGenres[i];
+            }
+        }
+    } else {
+        for (i = 0; i < movieGenres.length; i++) {
+            if (filterGenre == gameGenres[i]) {
+                filterGenre = movieGenres[i];
+            }
+        }
+    }
+}
+
 function handleSearchFormSubmit(event){
     event.preventDefault();
 
@@ -26,6 +57,16 @@ formEl.addEventListener("submit", handleSearchFormSubmit);
 const gameApiKey = "e74f1531c0f74b7db40ea409fea58784";
 const movieApiKey = "c23741a3";
 
+
+function storeLocal (storeMe, type) {
+    
+    if (type == 'game') {
+        window.localStorage.setItem('game', JSON.stringify(storeMe.results[0]));
+    } else {
+        window.localStorage.setItem('movie', JSON.stringify(storeMe));
+    }
+    
+}
 // Fetch request for Games 
 fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
     method: "GET"
