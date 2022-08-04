@@ -55,7 +55,7 @@ function fetchGameFromGenre(genre,pageNumber) {
         }
         return response.json();
     }).then(function(finalRec){
-        console.log(finalRec);
+        console.log(finalRec.results[0]);
     })
     })
 }
@@ -78,10 +78,14 @@ function filterGenre(filteredGenre) {
 }
 
 function setGenres() {
-        let gameInfo = JSON.parse(window.localStorage.getItem('game'));
-        genre1 = gameInfo.genres[0].name;
-        genre2 = gameInfo.genres[1].name;
-        genre3 = gameInfo.genres[2].name;
+        let movieInfo = JSON.parse(window.localStorage.getItem('movie'));
+        let objectString = movieInfo.Genre.replaceAll(',','');
+        console.log(objectString);
+        let movieGenreArray = objectString.split(' ');
+        console.log(movieGenreArray);
+        genre1 = movieGenreArray[0];
+        genre2 = movieGenreArray[1];
+        genre3 = movieGenreArray[2];
 }
 
 function handleSearchFormSubmit(event){
@@ -94,22 +98,13 @@ function handleSearchFormSubmit(event){
 // Event listeners
 formEl.addEventListener("submit", handleSearchFormSubmit);
 
-function storeLocal (storeMe, type) {
-    
-    if (type == 'game') {
-        window.localStorage.setItem('game', JSON.stringify(storeMe.results[0]));
-    } else {
-        window.localStorage.setItem('movie', JSON.stringify(storeMe));
-    }
-    
-}
 // Fetch request for Games 
 fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
     method: "GET"
 }).then(function(response){
     return response.json();
 }).then(function(data){
-    //console.log(data.results[0]);
+    console.log(data.results[0]);
     window.localStorage.setItem('game', JSON.stringify(data.results[0]))
 });
 
