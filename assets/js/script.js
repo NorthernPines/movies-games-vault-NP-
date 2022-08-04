@@ -1,19 +1,31 @@
-// Request Links 
+// Declare Variables for Form
+var formEl = document.querySelector("#form");
+var buttonEl = document.querySelector("#button");
+var searchBarEl = document.querySelector("#search-input")
 
-// RawG
-// https://api.rawg.io/api/platforms?key=YOUR_API_KEY 
+function handleSearchFormSubmit(event){
+    event.preventDefault();
 
-// OMDB 
-// https://www.omdbapi.com/?i=tt3896198&apikey=
-// OMDB Posters
-// https://img.omdbapi.com/?apikey=[yourkey]&
+    var searchInputVal = document.querySelector("#search-input").value.trim();
+    var formatInputVal = document.querySelector("#format-input").value;
+    
+    if(!searchInputVal){
+        console.error("please input a valid movie or game")
+        return;
+    }
+
+    var queryString = "./search-results.html?q=" + searchInputVal + "&format=" + formatInputVal;
+    location.assign(queryString);
+};
+
+// Event listeners
+formEl.addEventListener("submit", handleSearchFormSubmit);
 
 // Declare Variables 
 
 const gameApiKey = "e74f1531c0f74b7db40ea409fea58784";
 const movieApiKey = "c23741a3";
 
-// TODO: Find parameter for users to search by title
 // Fetch request for Games 
 fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
     method: "GET"
@@ -26,7 +38,6 @@ fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameAp
 
 
 // Fetch request for Movies     
-// TODO: Want to input user input for title after "t=" (Parameter for users to search by title)
 fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
     method: "GET"
 }).then(function(response){
