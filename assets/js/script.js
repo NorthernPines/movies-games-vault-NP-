@@ -30,7 +30,7 @@ function recommendGame() {
 
 function randomRecommendation() {
     let randomGenre = Math.floor(Math.random() * 3);
-    let randomNum = Math.floor(Math.random() * 10) + 1;
+    let randomNum = Math.floor(Math.random() * 25) + 1;
     let genreArray = [genre1,genre2,genre3];
     fetchGameFromGenre(genreArray[randomGenre],randomNum);
 }
@@ -118,14 +118,20 @@ function displayPreviousRecs() {
     // displaying game information of last saved game
     document.querySelector('#gTitle').textContent = "Title: " + game.name;
     document.querySelector('#gRelease').textContent = "Release: " + game.released;
-    document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
+    // checking if it has a value for the esrb rating
+    if (game.esrb_rating) {
+        document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
+    }
     document.querySelector('#gMCRating').textContent = "Metacritic: " + game.metacritic;
-    document.querySelector('#gGenres').textContent = "Genres: " + game.genres[0].name + ", " + game.genres[1].name + ", " + game.genres[2].name;
+    document.querySelector('#gGenres').textContent = "Genres: ";
+    // for as many genres as are listed
+    for (i = 0; i < game.genres.length; i++) {
+        document.querySelector('#gGenres').textContent += (game.genres[i].name + " ");
+    }
 
     // setting the source of the poster to the link fetched with the game
     var gPoster = game.background_image;
     document.querySelector('#gPoster').setAttribute('src', gPoster)
 }
-clearLocalStuff();
 recommendGame();
 displayPreviousRecs();
