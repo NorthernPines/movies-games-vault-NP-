@@ -13,7 +13,7 @@ var searchTerm = movieSearchBox.value;
 // Functions
 function loadMovies(searchTerm){
     // URL for Movie Titles 
-    var movieTitlesUrl = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=c23741a3`;
+    var movieTitlesUrl = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=ce9ece71`;
 
     fetch(movieTitlesUrl)
     .then(function(response){
@@ -74,7 +74,7 @@ function movieDetails(event){
     // If statement only if div has class of search-list-item
     if(event.target.matches(".search-list-item")){
         var movieId = event.target.getAttribute("data-id");
-        var movieDetailsUrl = `https://omdbapi.com/?i=${movieId}&apikey=c23741a3`;
+        var movieDetailsUrl = `https://omdbapi.com/?i=${movieId}&apikey=ce9ece71`;
         // When clicked, hide search list
         searchList.classList.add("hide-search-list");
         // Empty search box of text

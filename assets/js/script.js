@@ -6,7 +6,7 @@ var searchBarEl = document.querySelector("#search-input")
 // Declare keys 
 
 const gameApiKey = "e74f1531c0f74b7db40ea409fea58784";
-const movieApiKey = "c23741a3";
+const movieApiKey = "ce9ece71";
 
 // Creating genre vars for filtering
 var genre1;
@@ -31,7 +31,7 @@ function recommendGame() {
 
 function randomRecommendation() {
     let randomGenre = Math.floor(Math.random() * 3);
-    let randomNum = Math.floor(Math.random() * 10) + 1;
+    let randomNum = Math.floor(Math.random() * 25) + 1;
     let genreArray = [genre1,genre2,genre3];
     fetchGameFromGenre(genreArray[randomGenre],randomNum);
 }
@@ -56,6 +56,8 @@ function fetchGameFromGenre(genre,pageNumber) {
         return response.json();
     }).then(function(finalRec){
         console.log(finalRec);
+        window.localStorage.setItem('game', JSON.stringify(finalRec.results[0]));
+        displayPreviousRecs();
     })
     })
 }
@@ -78,10 +80,10 @@ function filterGenre(filteredGenre) {
 }
 
 function setGenres() {
-        let gameInfo = JSON.parse(window.localStorage.getItem('game'));
-        genre1 = gameInfo.genres[0].name;
-        genre2 = gameInfo.genres[1].name;
-        genre3 = gameInfo.genres[2].name;
+        let movieInfo = JSON.parse(window.localStorage.getItem('movie'));
+        genre1 = movieInfo.Genre[0].name;
+        genre2 = movieInfo.Genre[1].name;
+        genre3 = movieInfo.Genre[2].name;
 }
 
 function handleSearchFormSubmit(event){
@@ -104,25 +106,25 @@ function storeLocal (storeMe, type) {
     
 }
 // Fetch request for Games 
-fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
-    method: "GET"
-}).then(function(response){
-    return response.json();
-}).then(function(data){
-    //console.log(data.results[0]);
-    window.localStorage.setItem('game', JSON.stringify(data.results[0]))
-});
+// fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
+//     method: "GET"
+// }).then(function(response){
+//     return response.json();
+// }).then(function(data){
+//     //console.log(data.results[0]);
+//     window.localStorage.setItem('game', JSON.stringify(data.results[0]))
+// });
 
 
 // Fetch request for Movies     
-fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
-    method: "GET"
-}).then(function(response){
-    return response.json();
-}).then(function(data){
-    //console.log(data);
-    window.localStorage.setItem('movie', JSON.stringify(data));
-});
+// fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
+//     method: "GET"
+// }).then(function(response){
+//     return response.json();
+// }).then(function(data){
+//     //console.log(data);
+//     window.localStorage.setItem('movie', JSON.stringify(data));
+// });
 
 function displayPreviousRecs() {
     // getting last movie from local storage
@@ -148,14 +150,21 @@ function displayPreviousRecs() {
     // displaying game information of last saved game
     document.querySelector('#gTitle').textContent = "Title: " + game.name;
     document.querySelector('#gRelease').textContent = "Release: " + game.released;
-    document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
+    // checking if it has a value for the esrb rating
+    if (game.esrb_rating) {
+        document.querySelector('#gESRB').textContent = "Age Rating: " + game.esrb_rating.name;
+    }
     document.querySelector('#gMCRating').textContent = "Metacritic: " + game.metacritic;
-    document.querySelector('#gGenres').textContent = "Genres: " + game.genres[0].name + ", " + game.genres[1].name + ", " + game.genres[2].name;
+    document.querySelector('#gGenres').textContent = "Genres: ";
+    // for as many genres as are listed
+    for (i = 0; i < game.genres.length; i++) {
+        document.querySelector('#gGenres').textContent += (game.genres[i].name + "   ");
+    }
 
     // setting the source of the poster to the link fetched with the game
     var gPoster = game.background_image;
     document.querySelector('#gPoster').setAttribute('src', gPoster)
 }
 
-//displayPreviousRecs();
+// displayPreviousRecs();
 recommendGame();
