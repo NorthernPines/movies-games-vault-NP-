@@ -6,12 +6,13 @@ var searchBarEl = document.querySelector("#search-input")
 // Declare keys 
 
 const gameApiKey = "e74f1531c0f74b7db40ea409fea58784";
-const movieApiKey = "c23741a3";
+const movieApiKey = "ce9ece71";
 
 // Creating genre vars for filtering
 var genre1;
 var genre2;
 var genre3;
+var beenCleared = false;
 // Event listeners
 formEl.addEventListener("submit", handleSearchFormSubmit);
 
@@ -26,8 +27,6 @@ function recommendGame() {
     filterGenre(genre3);
     randomRecommendation();
 }
-// https://api.rawg.io/api/games?genre=action&key=e74f1531c0f74b7db40ea409fea58784&page=2
-// 'https://api.rawg.io/api/games?genre=' + genre + '&key=' + gameApiKey + '&page=' number'
 
 function randomRecommendation() {
     let randomGenre = Math.floor(Math.random() * 3);
@@ -44,10 +43,7 @@ function fetchGameFromGenre(genre,pageNumber) {
         }
         return response.json();
     }).then(function(recommendation){
-        console.log(recommendation);
         let gameTitle =  recommendation.results[0].slug;
-        console.log(gameTitle);
-        console.log('https://rawg.io/api/games?search=' + gameTitle + '&key=' + gameApiKey);
         fetch('https://rawg.io/api/games?search=' + gameTitle + '&key=' + gameApiKey)
     .then(function(response){
         if (!response.ok) {
@@ -55,7 +51,7 @@ function fetchGameFromGenre(genre,pageNumber) {
         }
         return response.json();
     }).then(function(finalRec){
-        console.log(finalRec.results[0]);
+        window.localStorage.setItem('game', JSON.stringify(finalRec.results[0]));
     })
     })
 }
@@ -78,14 +74,12 @@ function filterGenre(filteredGenre) {
 }
 
 function setGenres() {
-        let movieInfo = JSON.parse(window.localStorage.getItem('movie'));
-        let objectString = movieInfo.Genre.replaceAll(',','');
-        console.log(objectString);
-        let movieGenreArray = objectString.split(' ');
-        console.log(movieGenreArray);
-        genre1 = movieGenreArray[0];
-        genre2 = movieGenreArray[1];
-        genre3 = movieGenreArray[2];
+    let movieInfo = JSON.parse(window.localStorage.getItem('movie'));
+    let objectString = movieInfo.Genre.replaceAll(',','');
+    let movieGenreArray = objectString.split(' ');
+    genre1 = movieGenreArray[0];
+    genre2 = movieGenreArray[1];
+    genre3 = movieGenreArray[2];
 }
 
 function handleSearchFormSubmit(event){
@@ -99,25 +93,6 @@ function handleSearchFormSubmit(event){
 formEl.addEventListener("submit", handleSearchFormSubmit);
 
 // Fetch request for Games 
-fetch("https://rawg.io/api/games?search=" + "animal-crossing" + "&key=" + gameApiKey, {
-    method: "GET"
-}).then(function(response){
-    return response.json();
-}).then(function(data){
-    console.log(data.results[0]);
-    window.localStorage.setItem('game', JSON.stringify(data.results[0]))
-});
-
-
-// Fetch request for Movies     
-fetch("http://www.omdbapi.com/?t=deadpool&apikey=" + movieApiKey, {
-    method: "GET"
-}).then(function(response){
-    return response.json();
-}).then(function(data){
-    //console.log(data);
-    window.localStorage.setItem('movie', JSON.stringify(data));
-});
 
 function displayPreviousRecs() {
     // getting last movie from local storage
@@ -151,6 +126,6 @@ function displayPreviousRecs() {
     var gPoster = game.background_image;
     document.querySelector('#gPoster').setAttribute('src', gPoster)
 }
-
-//displayPreviousRecs();
+clearLocalStuff();
 recommendGame();
+displayPreviousRecs();

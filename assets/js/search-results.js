@@ -6,6 +6,7 @@ var searchList = document.getElementById("search-list");
 var resultGrid = document.getElementById("result-grid");
 var searchListMovies = document.querySelector(".search-list-item");
 var searchTerm = movieSearchBox.value;
+const movieApiKey = "ce9ece71";
 
 // URLs
 
@@ -13,7 +14,7 @@ var searchTerm = movieSearchBox.value;
 // Functions
 function loadMovies(searchTerm){
     // URL for Movie Titles 
-    var movieTitlesUrl = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=c23741a3`;
+    var movieTitlesUrl = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=` + movieApiKey;
 
     fetch(movieTitlesUrl)
     .then(function(response){
@@ -22,11 +23,9 @@ function loadMovies(searchTerm){
         }
         return response.json();
     }).then(function(movieResults){
-        console.log(movieResults);
         displayMovieList(movieResults.Search);
     }); 
 }
-
 
 function findMovies(){
 
@@ -66,7 +65,6 @@ function displayMovieList(movies){
                 <p>${movies[i].Year}</p>
             </div>
             `;
-            console.log(movieListItem);
             searchList.appendChild(movieListItem);
     }
 }
@@ -74,7 +72,7 @@ function movieDetails(event){
     // If statement only if div has class of search-list-item
     if(event.target.matches(".search-list-item")){
         var movieId = event.target.getAttribute("data-id");
-        var movieDetailsUrl = `https://omdbapi.com/?i=${movieId}&apikey=c23741a3`;
+        var movieDetailsUrl = `https://omdbapi.com/?i=${movieId}&apikey=` + movieApiKey;
         // When clicked, hide search list
         searchList.classList.add("hide-search-list");
         // Empty search box of text
@@ -88,10 +86,8 @@ function movieDetails(event){
             }
             return response.json();
         }).then(function(movieInfo){
-            // console.log(movieInfo);
             displayMovieDetails(movieInfo);
         })
-        // console.log(movieId);
     } 
 
 
